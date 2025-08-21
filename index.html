@@ -54,10 +54,11 @@ return function edit(lines,text){
     try{
       let call=new Function(CODE.value).call()
       text=call.call(this,text.split('\n'),text)
+      if(text instanceof Array) text=text.join('\n')
     }catch(e){
       text=e
     }
-    OUT.value=text
+    OUT.value=text.toString()
   }
 
   function transfer(){TEXT.value=OUT.value}

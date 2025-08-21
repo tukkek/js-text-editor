@@ -14,4 +14,9 @@ The code-panel defines a function that receives 2 models of the text from the le
 * `lines`, which is an array of the text as split by new-lines
 * `text`, the raw-text as a string
 
-Either or both parameters can be used and the function should return the text to be out-put. That result can then be copied to the clip-board for external-use or sent to the left-panel for further editing.
+Either or both parameters can be used and the function can return:
+* A string, which will be displayed as-is
+* An array, whose elements will be joined with new-lines
+* Any other value that will be coerced to a string via `value.toString()`
+
+The result can then be copied to the clip-board for external-use or sent to the left-panel for further editing.

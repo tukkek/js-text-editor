@@ -7,6 +7,8 @@ Unlike any IDE or RTE plug-in, it can also be used any-time; any-where. You can 
 
 Acceess it at https://tukkek.github.io/js-text-editor/.
 
+Down-load stand-alone file (right-click and save-as), https://raw.githubusercontent.com/tukkek/js-text-editor/refs/heads/main/index.html.
+
 ## Usage
 The code-panel defines a function that receives 2 models of the text from the left-panel:
 * `lines`, which is an array of the text as split by new-lines

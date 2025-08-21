@@ -50,7 +50,7 @@ return function edit(lines,text){
   const OUT=document.querySelector('#out textarea')
 
   function run(){
-    let text=TEXT.value
+    let text=TEXT.value.trim()
     try{
       let call=new Function(CODE.value).call()
       text=call.call(this,text.split('\n'),text)

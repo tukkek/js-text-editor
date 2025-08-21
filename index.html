@@ -1,0 +1,77 @@
+<!doctype HTML>
+<title>JS text-editor</title>
+
+<style>
+  body{
+    display:grid;
+    grid-template:'text code'
+                  'text out';
+    width:90vw;
+    height:90vh;
+    margin:0em;
+    padding:5vh 5vw;
+    gap:1em;
+  }
+  #text{grid-area:text;}
+  #code{grid-area:code;}
+  #out{
+    grid-area:out;
+    display:grid;
+    grid-template-rows:auto max-content;
+    gap:1em;
+  }
+  #out #controls{
+    display:grid;
+    grid-auto-flow:column;
+    gap:1em;
+  }
+  textarea{padding:1em;}
+</style>
+
+<textarea id='text' placeholder='Paste text here...' spellcheck='false'></textarea>
+
+<textarea id='code' spellcheck='false'>
+return function edit(lines,text){
+  return text||lines.join('\n')
+}
+</textarea>
+
+<div id='out'>
+  <textarea disabled spellcheck='false'></textarea>
+  <div id='controls'>
+    <button class='copy' target='panel'>Copy to left-panel</button>
+    <button class='copy' target='board'>Copy to clip-board</button>
+  </div>
+</div>
+
+<script>
+  const TEXT=document.querySelector('#text')
+  const CODE=document.querySelector('#code')
+  const OUT=document.querySelector('#out textarea')
+
+  function run(){
+    let text=TEXT.value
+    try{
+      let call=new Function(CODE.value).call()
+      text=call.call(this,text.split('\n'),text)
+    }catch(e){
+      text=e
+    }
+    OUT.value=text
+  }
+
+  function transfer(){TEXT.value=OUT.value}
+
+  function copy(){navigator.clipboard.write([new ClipboardItem({['text/plain']:OUT.value})])}
+
+  function queue(){
+    if(delay) clearTimeout(delay)
+    delay=setTimeout(()=>run(),1_000)
+  }
+
+  var delay=false
+
+  for(let element of [TEXT,CODE]) element.oninput=()=>queue()
+  document.querySelector('.copy[target="panel"]').onclick=()=>transfer()
+  document.querySelector('.copy[target="board"]').onclick=()=>copy()
+</script>
